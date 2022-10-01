@@ -1,0 +1,605 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "System Integration Project",
+    "description": "Viraj's Application API",
+    "license": {
+      "name": "NA",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "67.205.141.197:3001",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Agents",
+      "description": "Agents related APIs in the system"
+    },
+    {
+      "name": "Companies",
+      "description": "Companies related APIs in the system"
+    },
+    {
+      "name": "Orders",
+      "description": "Orders related APIs in the system"
+    },
+    {
+      "name": "Customers",
+      "description": "Customers related APIs in the system"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "definitions": {
+    "Agent": {
+      "required": [
+        "AGENT_NAME",
+        "WORKING_AREA",
+        "COMMISSION",
+        "PHONE_NO",
+        "COUNTRY"
+      ],
+      "properties": {
+        "AGENT_CODE": {
+          "type": "string",
+          "example": "jx0IpB"
+        },
+        "AGENT_NAME": {
+          "type": "string",
+          "example": "Ramasundar"
+        },
+        "WORKING_AREA": {
+          "type": "string",
+          "example": "Bangalore"
+        },
+        "COMMISSION": {
+          "type": "number",
+          "format": "float",
+          "example": 0.15
+        },
+        "PHONE_NO": {
+          "type": "string",
+          "format": "phone-number",
+          "example": 7725814763
+        },
+        "COUNTRY": {
+          "type": "string",
+          "example": "IN"
+        }
+      }
+    },
+    "Company": {
+      "properties": {
+        "COMPANY_ID": {
+          "type": "string",
+          "example": "15"
+        },
+        "COMPANY_NAME": {
+          "type": "string",
+          "example": "Jack Hill Ltd"
+        },
+        "COMPANY_CITY": {
+          "type": "string",
+          "example": "London"
+        }
+      }
+    },
+    "Customer": {
+      "required": ["CUST_CODE"],
+      "properties": {
+        "CUST_CODE": {
+          "type": "string",
+          "example": "C00013"
+        },
+        "CUST_NAME": {
+          "type": "string",
+          "example": "Holmes"
+        },
+        "CUST_CITY": {
+          "type": "string",
+          "example": "London"
+        },
+        "WORKING_AREA": {
+          "type": "string",
+          "example": "London"
+        },
+        "CUST_COUNTRY": {
+          "type": "string",
+          "example": "UK"
+        },
+        "GRADE": {
+          "type": "number",
+          "format": "int",
+          "example": 2
+        },
+        "OPENING_AMT": {
+          "type": "number",
+          "format": "float",
+          "example": 6000
+        },
+        "RECEIVE_AMT": {
+          "type": "number",
+          "format": "float",
+          "example": 5000
+        },
+        "PAYMENT_AMT": {
+          "type": "number",
+          "format": "float",
+          "example": 500
+        },
+        "OUTSTANDING_AMT": {
+          "type": "number",
+          "format": "float",
+          "example": 7000
+        },
+        "PHONE_NO": {
+          "type": "string",
+          "example": 7725814763
+        },
+        "AGENT_CODE": {
+          "type": "string",
+          "example": "jx0IpB"
+        }
+      }
+    },
+    "Order": {
+      "required": [
+        "ORD_NUM",
+        "ORD_AMOUNT",
+        "ADVANCE_AMOUNT",
+        "ORD_DATE",
+        "CUST_CODE",
+        "AGENT_CODE",
+        "ORD_DESCRIPTION"
+      ],
+      "properties": {
+        "ORD_NUM": {
+          "type": "number",
+          "format": "int",
+          "example": 200100
+        },
+        "ORD_AMOUNT": {
+          "type": "number",
+          "format": "float",
+          "example": 1000
+        },
+        "ADVANCE_AMOUNT": {
+          "type": "number",
+          "format": "float",
+          "example": 800
+        },
+        "CUST_CODE": {
+          "type": "string",
+          "example": "C00015"
+        },
+        "AGENT_CODE": {
+          "type": "string",
+          "example": "jx0IpB"
+        },
+        "ORD_DESCRIPTION": {
+          "type": "string",
+          "example": "Test"
+        }
+      }
+    },
+    "PatchAgent": {
+      "required": [
+        "AGENT_CODE",
+        "AGENT_NAME",
+        "WORKING_AREA",
+        "COMMISSION",
+        "PHONE_NO",
+        "COUNTRY"
+      ],
+      "properties": {
+        "AGENT_CODE": {
+          "type": "string",
+          "example": "jx0IpB"
+        },
+        "AGENT_NAME": {
+          "type": "string",
+          "example": "Bob"
+        },
+        "WORKING_AREA": {
+          "type": "string",
+          "example": "Pune"
+        },
+        "COMMISSION": {
+          "type": "number",
+          "format": "float",
+          "example": 0.12
+        },
+        "PHONE_NO": {
+          "type": "string",
+          "format": "phone-number",
+          "example": 7725814763
+        },
+        "COUNTRY": {
+          "type": "string",
+          "example": "US"
+        }
+      }
+    },
+    "Success": {
+      "required": ["message"],
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Agent is deleted, Agent info is updated"
+        }
+      }
+    },
+    "Failure": {
+      "required": ["message"],
+      "properties": {
+        "message": {
+          "type": "string",
+          "example": "Agent not found"
+        }
+      }
+    },
+    "Error": {
+      "required": ["value", "msg", "param", "location"],
+      "properties": {
+        "value": {
+          "type": "string",
+          "example": "A"
+        },
+        "msg": {
+          "type": "string",
+          "example": "COUNTRY length should between 2 to 25"
+        },
+        "param": {
+          "type": "string",
+          "example": "COUNTRY"
+        },
+        "location": {
+          "type": "string",
+          "example": "body"
+        }
+      }
+    },
+    "Agents": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Agent"
+      }
+    },
+    "Companies": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Company"
+      }
+    },
+    "Customers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Customer"
+      }
+    },
+    "Errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "Orders": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Order"
+      }
+    }
+  },
+  "paths": {
+    "/agents": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "Get all agents in system",
+        "parameters": [
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Agents"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Agents"],
+        "summary": "Create new Agent in system",
+        "description": "Create new Agent in system",
+        "parameters": [
+          {
+            "name": "Agent",
+            "in": "body",
+            "description": "Agent that we want to create",
+            "schema": {
+              "$ref": "#/definitions/Agent"
+            }
+          },
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "201": {
+            "description": "New Agent is created",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            }
+          },
+          "400": {
+            "description": "New Agent is created",
+            "schema": {
+              "$ref": "#/definitions/Errors"
+            }
+          }
+        }
+      }
+    },
+    "/agents/{id}": {
+      "get": {
+        "tags": ["Agents"],
+        "summary": "Get all agents in system with given working area.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "agent id, e.g jx0IpB",
+            "type": "string"
+          },
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Agents"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Failure"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Agents"],
+        "summary": "Update Agent info in system",
+        "description": "Update Agent in system",
+        "parameters": [
+          {
+            "name": "Agent",
+            "in": "body",
+            "description": "Agent that we want to Update",
+            "schema": {
+              "$ref": "#/definitions/Agent"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "agent id, e.g jx0IpB",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          },
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Updated agent",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Failure"
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Agents"],
+        "description": "Update Agent in system",
+        "parameters": [
+          {
+            "name": "Agent",
+            "in": "body",
+            "description": "Agent that we want to Update",
+            "schema": {
+              "$ref": "#/definitions/PatchAgent"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "agent id, e.g jx0IpB",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          },
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "Updated agent",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Failure"
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete Agent with given ID",
+        "tags": ["Agents"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "agent id, e.g jx0IpB",
+            "type": "string"
+          },
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Agent is deleted",
+            "schema": {
+              "$ref": "#/definitions/Success"
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "schema": {
+              "$ref": "#/definitions/Failure"
+            }
+          }
+        }
+      }
+    },
+    "/companies": {
+      "get": {
+        "tags": ["Companies"],
+        "summary": "Get all companies in system",
+        "parameters": [
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Companies"
+            }
+          }
+        }
+      }
+    },
+    "/orders": {
+      "get": {
+        "tags": ["Orders"],
+        "summary": "Get all Orders in system",
+        "parameters": [
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Orders"
+            }
+          }
+        }
+      }
+    },
+    "/customers": {
+      "get": {
+        "tags": ["Customers"],
+        "summary": "Get all Customers in system",
+        "parameters": [
+          {
+            "name": "request-id",
+            "in": "header",
+            "description": "Unique identifier to track every request, e.g 1f15-4be7-ae45-712f",
+            "required": true,
+            "type": "string",
+            "maximum": 32,
+            "minimum": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Customers"
+            }
+          }
+        }
+      }
+    }
+  }
+}
