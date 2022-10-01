@@ -218,9 +218,6 @@ app.delete("/agents/:id", async (req, res) => {
     }
     let delete_query = `Delete from agents where AGENT_CODE='${AGENT_CODE}'`;
     const result = await db.pool.query(delete_query);
-    // let request_id = req.headers["request-id"];
-    // res.setHeader("request-id", request_id);
-    // res.send(result);
     res.statusCode = 200;
       return res.json({
         message: 'Deleted Agent with id: '+ AGENT_CODE
