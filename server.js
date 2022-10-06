@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const port = 3001;
+const axios = require('axios').default;
 
 var cors = require("cors");
 
@@ -258,6 +259,18 @@ app.get("/orders", async (req, res) => {
   } catch (err) {
   throw err;
 }
+});
+
+app.get("/say",async(req,res)=>{
+  const url = "https://dijpk4mi4mqnqbmsrnvsszm2zm0pyrsx.lambda-url.us-east-1.on.aws?keyword="+req.query.keyword;
+  console.log("inside");
+  axios.get(url)
+  .then((response)=>{
+       res.json(response.data);
+  }).catch((error)=>{
+       console.log(error);
+       res.send(error);
+  })
 });
 
 app.get("*", async (req, res) => {
